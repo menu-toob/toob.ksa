@@ -2,9 +2,14 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>قهوة طوب</title>
   <style>
+    html, body {
+      touch-action: manipulation;
+      overscroll-behavior: none;
+    }
+
     body {
       margin: 0;
       padding: 0;
@@ -51,12 +56,8 @@
     }
 
     @keyframes slideInLeft {
-      from {
-        transform: translateX(100%);
-      }
-      to {
-        transform: translateX(0%);
-      }
+      from { transform: translateX(100%); }
+      to { transform: translateX(0%); }
     }
 
     .slide-in-right {
@@ -64,12 +65,8 @@
     }
 
     @keyframes slideInRight {
-      from {
-        transform: translateX(-100%);
-      }
-      to {
-        transform: translateX(0%);
-      }
+      from { transform: translateX(-100%); }
+      to { transform: translateX(0%); }
     }
 
     .gallery {
@@ -114,15 +111,19 @@
       background: #942424;
       color: black;
       border: none;
-      font-size: 24px;
+      font-size: 32px;
+      font-weight: 900;
       padding: 8px 12px;
       cursor: pointer;
-      width: 40px;
-      height: 40px;
+      width: 48px;
+      height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: bold;
+    }
+
+    #fullscreenViewer.touch-zoom-enabled {
+      touch-action: pinch-zoom;
     }
   </style>
 </head>
@@ -146,7 +147,7 @@
     <img src="8.jpg" alt="صورة 8" onclick="openFullscreen(this.src)">
   </div>
 
-  <div id="fullscreenViewer" onclick="closeFullscreen()">
+  <div id="fullscreenViewer">
     <button onclick="closeFullscreen(); event.stopPropagation()">✕</button>
     <img id="fullscreenImage" src="" alt="صورة مكبرة" />
   </div>
@@ -164,21 +165,35 @@
 
       image.src = src;
       viewer.style.display = 'flex';
+      viewer.classList.add('touch-zoom-enabled');
       document.body.style.overflow = 'hidden';
-
       topBar.style.display = 'none';
+
+      document.querySelector('meta[name="viewport"]').setAttribute('content',
+        'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes');
     }
 
     function closeFullscreen() {
       const viewer = document.getElementById('fullscreenViewer');
       viewer.style.display = 'none';
+      viewer.classList.remove('touch-zoom-enabled');
       document.body.style.overflow = 'auto';
-
       topBar.style.display = 'flex';
+
       topBar.classList.remove('slide-in-left', 'slide-in-right');
       void topBar.offsetWidth;
       topBar.classList.add('slide-in-right');
+
+      document.querySelector('meta[name="viewport"]').setAttribute('content',
+        'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
     }
+
+    document.addEventListener('gesturestart', function (e) {
+      const viewer = document.getElementById('fullscreenViewer');
+      if (!viewer.classList.contains('touch-zoom-enabled')) {
+        e.preventDefault();
+      }
+    }, { passive: false });
   </script>
 </body>
 </html>
