@@ -1,195 +1,201 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>قهوة طوب</title>
   <style>
-    html, body {
-      touch-action: manipulation;
-      overscroll-behavior: none;
+    :root{
+      --accent: #ac3c34;
+      --bg-dark: #121212;
+      --gap: 14px;
+      --radius: 12px;
     }
-
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #000;
-      font-family: sans-serif;
-      overflow-x: hidden;
-      padding-top: 45px;
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans Arabic", sans-serif;
+      background:linear-gradient(180deg,#0b0b0b 0%, #0f0f0f 100%);
+      color:#fff;
     }
-
-    .top-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 45px;
-      background-color: #5e433c;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10000;
-      transform: translateX(100%);
+    body{
+      display:flex;
+      justify-content:center;
+      padding:40px 20px;
     }
-
-    .top-bar-content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+    .container{
+      width:100%;
+      max-width:1100px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:var(--gap);
+      text-align:center;
     }
-
-    .top-bar-content img {
-      height: 24px;
-      width: auto;
+    @media (max-width:760px){
+      .container{grid-template-columns:1fr;}
     }
-
-    .top-bar-content span {
-      font-size: 16px;
-      font-weight: bold;
-      color: white;
+    .card{
+      background:var(--bg-dark);
+      padding:18px;
+      border-radius:var(--radius);
+      box-shadow:0 6px 18px rgba(0,0,0,0.6);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
     }
-
-    .slide-in-left {
-      animation: slideInLeft 0.6s ease-out forwards;
+    .note{
+      color:#fff;
+      font-size:14px;
+      margin:0 0 10px 0;
+      text-align:center;
     }
-
-    @keyframes slideInLeft {
-      from { transform: translateX(100%); }
-      to { transform: translateX(0%); }
+    .menu-box{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:12px;
+      cursor:pointer;
     }
-
-    .slide-in-right {
-      animation: slideInRight 0.6s ease-out forwards;
+    .menu-thumb{
+      border:3px solid var(--accent);
+      border-radius:10px;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
-
-    @keyframes slideInRight {
-      from { transform: translateX(-100%); }
-      to { transform: translateX(0%); }
+    .menu-thumb img{
+      width:100%;
+      height:auto;
+      display:block;
     }
-
-    .gallery {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      padding: 10px;
+    .menu-btn{
+      background:transparent;
+      border:2px solid var(--accent);
+      padding:8px 14px;
+      border-radius:999px;
+      color:var(--accent);
+      font-weight:600;
     }
-
-    .gallery img {
-      width: calc(50% - 10px);
-      height: auto;
-      cursor: pointer;
-      border: 4px solid white;
-      box-sizing: border-box;
+    .gallery-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
     }
-
-    #fullscreenViewer {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: rgba(0, 0, 0, 1);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
+    @media (max-width:480px){
+      .gallery-grid{grid-template-columns:repeat(2,1fr);}
     }
-
-    #fullscreenViewer img {
-      width: 100vw;
-      height: 100vh;
-      object-fit: contain;
+    .thumb{
+      border:3px solid var(--accent);
+      border-radius:8px;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#000;
     }
-
-    #fullscreenViewer button {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: #5e433c;
-      color: black;
-      border: none;
-      font-size: 32px;
-      font-weight: 900;
-      padding: 8px 12px;
-      cursor: pointer;
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .thumb img{
+      width:100%;
+      height:auto;
+      display:block;
+      transition:transform .25s ease;
     }
-
-    #fullscreenViewer.touch-zoom-enabled {
-      touch-action: pinch-zoom;
+    .thumb:hover img{
+      transform:scale(1.05);
+    }
+    .lightbox{
+      position:fixed;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background:rgba(0,0,0,0.8);
+      z-index:1200;
+      padding:20px;
+    }
+    .lightbox.open{display:flex;}
+    .lightbox-inner{
+      max-width:960px;
+      width:100%;
+      max-height:90vh;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .lightbox img{
+      width:100%;
+      height:auto;
+      max-height:82vh;
+      object-fit:contain;
+      border-radius:12px;
+    }
+    .close{
+      align-self:flex-end;
+      background:var(--accent);
+      border:none;
+      color:#fff;
+      padding:8px 12px;
+      border-radius:8px;
+      font-weight:700;
+      cursor:pointer;
     }
   </style>
 </head>
 <body>
-
-  <div class="top-bar" id="topBar">
-    <div class="top-bar-content">
-      <img src="tap.png" alt="اضغط">
-      <span>يُرجى النقر على الصورة المختارة لعرضها</span>
+  <div class="container" dir="rtl">
+    <section class="card">
+      <div class="menu-box" id="menuBox">
+        <div class="menu-thumb">
+          <img src="1.png" alt="منيو" id="menuMainImg">
+        </div>
+        <button class="menu-btn" id="openMenu">عرض المنيو الكامل</button>
+      </div>
+    </section>
+    <section class="card">
+      <h2 style="margin:-6px 0 4px 0; font-size:20px; color:var(--accent);">صور الحلا</h2>
+      <p class="note">يُرجى النقر على الصورة المختارة لعرضها</p>
+      <div class="gallery-grid" id="gallery">
+        <div class="thumb"><img src="2.png" alt="صورة 2" data-full="2.png"></div>
+        <div class="thumb"><img src="3.png" alt="صورة 3" data-full="3.png"></div>
+        <div class="thumb"><img src="4.png" alt="صورة 4" data-full="4.png"></div>
+        <div class="thumb"><img src="5.png" alt="صورة 5" data-full="5.png"></div>
+        <div class="thumb"><img src="6.png" alt="صورة 6" data-full="6.png"></div>
+        <div class="thumb"><img src="7.png" alt="صورة 7" data-full="7.png"></div>
+      </div>
+    </section>
+  </div>
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-inner">
+      <button class="close" id="closeBtn">إغلاق</button>
+      <img src="" alt="" id="lightboxImg">
     </div>
   </div>
-
-  <div class="gallery">
-    <img src="1.png" alt="صورة 1" onclick="openFullscreen(this.src)">
-    <img src="2.jpeg" alt="صورة 2" onclick="openFullscreen(this.src)">
-    <img src="3.jpeg" alt="صورة 3" onclick="openFullscreen(this.src)">
-    <img src="4.jpeg" alt="صورة 4" onclick="openFullscreen(this.src)">
-  </div>
-
-  <div id="fullscreenViewer">
-    <button onclick="closeFullscreen(); event.stopPropagation()">✕</button>
-    <img id="fullscreenImage" src="" alt="صورة مكبرة" />
-  </div>
-
   <script>
-    const topBar = document.getElementById('topBar');
-
-    window.addEventListener('load', () => {
-      topBar.classList.add('slide-in-left');
+    const openMenu = document.getElementById('openMenu');
+    const menuMainImg = document.getElementById('menuMainImg');
+    const gallery = document.getElementById('gallery');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const closeBtn = document.getElementById('closeBtn');
+    function openLightbox(src, alt){
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || '';
+      lightbox.classList.add('open');
+    }
+    function closeLightbox(){
+      lightbox.classList.remove('open');
+      setTimeout(()=>lightboxImg.src = '',250);
+    }
+    openMenu.addEventListener('click', ()=> openLightbox(menuMainImg.src, menuMainImg.alt));
+    menuMainImg.addEventListener('click', ()=> openLightbox(menuMainImg.src, menuMainImg.alt));
+    gallery.addEventListener('click', (e)=>{
+      const img = e.target.closest('img');
+      if(!img) return;
+      openLightbox(img.dataset.full || img.src, img.alt);
     });
-
-    function openFullscreen(src) {
-      const viewer = document.getElementById('fullscreenViewer');
-      const image = document.getElementById('fullscreenImage');
-
-      image.src = src;
-      viewer.style.display = 'flex';
-      viewer.classList.add('touch-zoom-enabled');
-      document.body.style.overflow = 'hidden';
-      topBar.style.display = 'none';
-
-      document.querySelector('meta[name="viewport"]').setAttribute('content',
-        'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes');
-    }
-
-    function closeFullscreen() {
-      const viewer = document.getElementById('fullscreenViewer');
-      viewer.style.display = 'none';
-      viewer.classList.remove('touch-zoom-enabled');
-      document.body.style.overflow = 'auto';
-      topBar.style.display = 'flex';
-
-      topBar.classList.remove('slide-in-left', 'slide-in-right');
-      void topBar.offsetWidth;
-      topBar.classList.add('slide-in-right');
-
-      document.querySelector('meta[name="viewport"]').setAttribute('content',
-        'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-    }
-
-    document.addEventListener('gesturestart', function (e) {
-      const viewer = document.getElementById('fullscreenViewer');
-      if (!viewer.classList.contains('touch-zoom-enabled')) {
-        e.preventDefault();
-      }
-    }, { passive: false });
+    closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLightbox(); });
   </script>
 </body>
 </html>
