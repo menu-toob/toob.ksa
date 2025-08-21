@@ -1,5 +1,4 @@
 <!doctype html>
-<html lang="ar">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -11,17 +10,15 @@
       --gap: 14px;
       --radius: 12px;
     }
-    html,body{
-      height:100%;
+    body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans Arabic", sans-serif;
       background:linear-gradient(180deg,#0b0b0b 0%, #0f0f0f 100%);
       color:#fff;
-    }
-    body{
       display:flex;
       justify-content:center;
       padding:40px 20px;
+      min-height:100vh;
     }
     .container{
       width:100%;
@@ -44,10 +41,8 @@
       align-items:center;
     }
     .note{
-      color:#fff;
       font-size:14px;
       margin:0 0 10px 0;
-      text-align:center;
     }
     .menu-box{
       display:flex;
@@ -76,6 +71,12 @@
       border-radius:999px;
       color:var(--accent);
       font-weight:600;
+      cursor:pointer;
+      transition:all .2s ease;
+    }
+    .menu-btn:hover{
+      background:var(--accent);
+      color:#fff;
     }
     .gallery-grid{
       display:grid;
@@ -141,8 +142,8 @@
     }
   </style>
 </head>
-<body>
-  <div class="container" dir="rtl">
+<body dir="rtl">
+  <div class="container">
     <section class="card">
       <div class="menu-box" id="menuBox">
         <div class="menu-thumb">
@@ -197,4 +198,3 @@
     document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLightbox(); });
   </script>
 </body>
-</html>
