@@ -143,32 +143,38 @@
 </head>
 <body>
   <div class="container" dir="rtl">
+    <!-- قسم المنيو -->
     <section class="card">
       <div class="menu-box" id="menuBox">
         <div class="menu-thumb">
-          <img src="A.png" alt="منيو" id="menuMainImg">
+          <img src="A.png" alt="صورة المنيو" id="menuMainImg">
         </div>
         <button class="menu-btn" id="openMenu">عرض المنيو الكامل</button>
       </div>
     </section>
+
+    <!-- قسم صور الحلا -->
     <section class="card">
       <h2 style="margin:-6px 0 4px 0; font-size:20px; color:var(--accent);">صور الحلا</h2>
       <p class="note">يُرجى النقر على الصورة المختارة لعرضها</p>
       <div class="gallery-grid" id="gallery">
-        <div class="thumb"><img src="B.png" alt="صورة 2" data-full="B.png"></div>
-        <div class="thumb"><img src="C.png" alt="صورة 3" data-full="C.png"></div>
-        <div class="thumb"><img src="D.png" alt="صورة 4" data-full="D.png"></div>
-        <div class="thumb"><img src="E.png" alt="صورة 5" data-full="E.png"></div>
-        <div class="thumb"><img src="F.png" alt="صورة 6" data-full="F.png"></div>
+        <div class="thumb"><img src="B.png" alt="حلا 1" data-full="B.png"></div>
+        <div class="thumb"><img src="C.png" alt="حلا 2" data-full="C.png"></div>
+        <div class="thumb"><img src="D.png" alt="حلا 3" data-full="D.png"></div>
+        <div class="thumb"><img src="E.png" alt="حلا 4" data-full="E.png"></div>
+        <div class="thumb"><img src="F.png" alt="حلا 5" data-full="F.png"></div>
       </div>
     </section>
   </div>
+
+  <!-- Lightbox -->
   <div class="lightbox" id="lightbox">
     <div class="lightbox-inner">
       <button class="close" id="closeBtn">إغلاق</button>
       <img src="" alt="" id="lightboxImg">
     </div>
   </div>
+
   <script>
     const openMenu = document.getElementById('openMenu');
     const menuMainImg = document.getElementById('menuMainImg');
@@ -176,22 +182,27 @@
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
     const closeBtn = document.getElementById('closeBtn');
+
     function openLightbox(src, alt){
       lightboxImg.src = src;
       lightboxImg.alt = alt || '';
       lightbox.classList.add('open');
     }
+
     function closeLightbox(){
       lightbox.classList.remove('open');
       setTimeout(()=>lightboxImg.src = '',250);
     }
+
     openMenu.addEventListener('click', ()=> openLightbox(menuMainImg.src, menuMainImg.alt));
     menuMainImg.addEventListener('click', ()=> openLightbox(menuMainImg.src, menuMainImg.alt));
+
     gallery.addEventListener('click', (e)=>{
       const img = e.target.closest('img');
       if(!img) return;
       openLightbox(img.dataset.full || img.src, img.alt);
     });
+
     closeBtn.addEventListener('click', closeLightbox);
     lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeLightbox(); });
     document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLightbox(); });
