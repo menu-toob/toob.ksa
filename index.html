@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>قهوة طوب</title>
+  <meta name="description" content="قائمة قهوة طوب">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="page">
+    <header class="header">
+      <img src="logo.png" alt="قهوة طوب" class="header-logo">
+
+      <div class="social">
+        <a href="https://www.instagram.com/toob.ksa?igsh=MTQ0emh1NWZwY2RoMw==" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="إنستقرام">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+        </a>
+        <a href="https://www.tiktok.com/@toob.ksa" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="تيك توك">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
+          </svg>
+        </a>
+      </div>
+      <p class="social-text">خلّونا نشوف إبداعكم</p>
+    </header>
+
+    <nav class="tabs" id="tabs">
+      <button class="tab-btn active" data-tab="drinks">المشروبات</button>
+      <button class="tab-btn" data-tab="desserts">الحلا</button>
+    </nav>
+
+    <div class="tabs-content">
+      <div class="tab-panel active" id="panel-drinks">
+        <div class="card card--featured" data-index="0">
+          <div class="card-frame">
+            <img src="1.jpeg" alt="مشروب" loading="lazy">
+            <span class="card-title">قائمة المشروبات</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="panel-desserts">
+        <div class="grid" id="gallery">
+          <div class="card" data-index="1">
+            <div class="card-frame">
+              <img src="2.jpeg" alt="حلا" loading="lazy">
+              <span class="card-title">فيكتوريا كيك</span>
+            </div>
+          </div>
+          <div class="card" data-index="2">
+            <div class="card-frame">
+              <img src="3.jpeg" alt="حلا" loading="lazy">
+              <span class="card-title">سكوير كنافة</span>
+            </div>
+          </div>
+          <div class="card" data-index="3">
+            <div class="card-frame">
+              <img src="4.jpeg" alt="حلا" loading="lazy">
+              <span class="card-title">كلير تراميسو</span>
+            </div>
+          </div>
+          <div class="card" data-index="4">
+            <div class="card-frame">
+              <img src="5.jpeg" alt="حلا" loading="lazy">
+              <span class="card-title">كوين كيك</span>
+            </div>
+          </div>
+          <div class="card" data-index="5">
+            <div class="card-frame">
+              <img src="6.jpeg" alt="حلا" loading="lazy">
+              <span class="card-title">مكرملة</span>
+            </div>
+          </div>
+          <div class="card" data-index="6">
+            <div class="card-frame">
+              <img src="7.jpeg" alt="حلا" loading="lazy">
+              <span class="card-title">باين بيري</span>
+            </div>
+          </div>
+          <div class="card" data-index="7">
+            <div class="card-frame">
+              <img src="8.jpeg" alt="حلا" loading="lazy">
+              <span class="card-title">كاروت كيك</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-line"></div>
+      <p class="footer-text">
+        <span>جميع الحقوق محفوظة لقهوة طوب</span>
+        <span>2026 &copy;</span>
+      </p>
+    </footer>
+  </div>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-bg"></div>
+    <button class="lightbox-close" aria-label="إغلاق">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M15 5L5 15M5 5l10 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <div class="lightbox-stage" id="lightbox-stage">
+      <div class="lightbox-loader" id="lightbox-loader"></div>
+      <img src="" alt="" id="lightbox-img" draggable="false">
+    </div>
+    <div class="lightbox-tools">
+      <button class="tool-btn" id="zoom-out" aria-label="تصغير">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <span class="counter" id="counter">1 / 8</span>
+      <button class="tool-btn" id="zoom-in" aria-label="تكبير">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
